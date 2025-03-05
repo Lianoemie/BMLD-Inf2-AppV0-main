@@ -1,19 +1,22 @@
 import streamlit as st
 
+# CSS für hellblauen Hintergrund
+st.markdown("""
+    <style>
+        .reportview-container {
+            background-color: #ADD8E6;  /* Hellblau */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Titel der App
 st.title('Kalorienrechner')
 
-# Buttons für Geschlechtsauswahl
-geschlecht = None
-
-if st.button('Männlich'):
-    geschlecht = 'Männlich'
-elif st.button('Weiblich'):
-    geschlecht = 'Weiblich'
-
-# Falls noch kein Geschlecht ausgewählt wurde
-if not geschlecht:
-    st.warning("Bitte wählen Sie Ihr Geschlecht aus!")
+# Auswahl des Geschlechts
+geschlecht = st.radio(
+    'Wählen Sie Ihr Geschlecht:',
+    ('Männlich', 'Weiblich')
+)
 
 # Eingabefelder für Alter, Gewicht und Größe
 alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=25, step=1)
@@ -23,7 +26,7 @@ groesse = st.number_input('Größe (in cm)', min_value=100, max_value=250, value
 # Auswahl des Aktivitätsniveaus
 aktivitaet = st.radio(
     'Wählen Sie Ihr Aktivitätsniveau aus:',
-    ('Sitzend', 'Stehend', 'Laufend')
+    ('Vorwiegend sitzend (Bürojob, Studium)', 'Vorwiegend stehend (Verkauf, Handwerk)', 'Vorwiegend laufend (Handwerker, Sportler)')
 )
 
 # BMR-Berechnung (Männer und Frauen)
@@ -36,27 +39,22 @@ def berechne_bmr(gewicht, groesse, alter, geschlecht='Männlich'):
 
 # Aktivitätsfaktor je nach Auswahl
 def berechne_tdee(bmr, aktivitaet):
-    if aktivitaet == 'Sitzend':
+    if aktivitaet == 'Vorwiegend sitzend (Bürojob, Studium)':
         aktivitaetsfaktor = 1.2
-    elif aktivitaet == 'Stehend':
+    elif aktivitaet == 'Vorwiegend stehend (Verkauf, Handwerk)':
         aktivitaetsfaktor = 1.55
-    else:  # Laufend
+    else:  # Vorwiegend laufend (Handwerker, Sportler)
         aktivitaetsfaktor = 1.9
     return bmr * aktivitaetsfaktor
 
-# Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
-if geschlecht:
+# Berechnung des BMR (Grundumsatz), falls Geschlecht und andere Eingaben vorhanden
+if st.button('Berechnen'):
     bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
-
-    # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
     tdee = berechne_tdee(bmr, aktivitaet)
-
-    # Zeige die Eingabewerte
-    st.write(f"Geschlecht: {geschlecht}")
-    st.write(f"Alter: {alter} Jahre")
-    st.write(f"Gewicht: {gewicht} kg")
-    st.write(f"Größe: {groesse} cm")
-    st.write(f"Aktivitätsniveau: {aktivitaet}")
 
     # Zeige den Gesamtumsatz (TDEE) an
     st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
+
+# Button für "Löschen" (Zurücksetzen der Eingaben)
+if st.button('Löschen'):
+    st.experimental_rerun()  # Um die Seite neu zu laden und alle Eingaben zurückzusetzen
