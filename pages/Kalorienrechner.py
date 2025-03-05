@@ -3,11 +3,17 @@ import streamlit as st
 # Titel der App
 st.title('Kalorienrechner')
 
-# Eingabefeld für Geschlecht
-geschlecht = st.radio(
-    'Wählen Sie Ihr Geschlecht:',
-    ('Männlich', 'Weiblich')
-)
+# Buttons für Geschlechtsauswahl
+geschlecht = None
+
+if st.button('Männlich'):
+    geschlecht = 'Männlich'
+elif st.button('Weiblich'):
+    geschlecht = 'Weiblich'
+
+# Falls noch kein Geschlecht ausgewählt wurde
+if not geschlecht:
+    st.warning("Bitte wählen Sie Ihr Geschlecht aus!")
 
 # Eingabefelder für Alter, Gewicht und Größe
 alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=25, step=1)
@@ -21,7 +27,7 @@ aktivitaet = st.radio(
 )
 
 # BMR-Berechnung (Männer und Frauen)
-def berechne_bmr(gewicht, groesse, alter, geschlecht='männlich'):
+def berechne_bmr(gewicht, groesse, alter, geschlecht='Männlich'):
     if geschlecht == 'Männlich':
         bmr = 88.362 + (13.397 * gewicht) + (4.799 * groesse) - (5.677 * alter)
     else:  # weiblich
@@ -38,18 +44,19 @@ def berechne_tdee(bmr, aktivitaet):
         aktivitaetsfaktor = 1.9
     return bmr * aktivitaetsfaktor
 
-# Berechnung des BMR (Grundumsatz)
-bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
+# Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
+if geschlecht:
+    bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
 
-# TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
-tdee = berechne_tdee(bmr, aktivitaet)
+    # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
+    tdee = berechne_tdee(bmr, aktivitaet)
 
-# Zeige die Eingabewerte
-st.write(f"Geschlecht: {geschlecht}")
-st.write(f"Alter: {alter} Jahre")
-st.write(f"Gewicht: {gewicht} kg")
-st.write(f"Größe: {groesse} cm")
-st.write(f"Aktivitätsniveau: {aktivitaet}")
+    # Zeige die Eingabewerte
+    st.write(f"Geschlecht: {geschlecht}")
+    st.write(f"Alter: {alter} Jahre")
+    st.write(f"Gewicht: {gewicht} kg")
+    st.write(f"Größe: {groesse} cm")
+    st.write(f"Aktivitätsniveau: {aktivitaet}")
 
-# Zeige den Gesamtumsatz (TDEE) an
-st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
+    # Zeige den Gesamtumsatz (TDEE) an
+    st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
