@@ -1,11 +1,9 @@
 import streamlit as st
 import pandas as pd
 
-st.title("Meine erste Streamlit App")
+st.title("Kalorienrechner")
 
-# !! WICHTIG: Eure Emails müssen in der App erscheinen!!
-
-# Streamlit über den Text unten direkt in die App - cool!
+st.write("Der Kalorienrechner berechnet den Kalorienbedarf einer Person. Dazu werden verschiedene Angaben benötigt, wie zum Beispiel das Geschlecht, das Alter, das Gewicht und die Grösse. Anhand dieser Angaben wird der Kalorienbedarf berechnet.")
 """
 Diese App wurde von folgenden Personen entwickelt:
 - Lia Müller (muellli6@students.zhaw.ch)
