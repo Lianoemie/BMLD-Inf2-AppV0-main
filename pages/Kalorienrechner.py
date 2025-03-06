@@ -1,22 +1,19 @@
 import streamlit as st
 
-# CSS für hellblauen Hintergrund
-st.markdown("""
-    <style>
-        .reportview-container {
-            background-color: #ADD8E6;  /* Hellblau */
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 # Titel der App
 st.title('Kalorienrechner')
 
-# Auswahl des Geschlechts
-geschlecht = st.radio(
-    'Wählen Sie Ihr Geschlecht:',
-    ('Männlich', 'Weiblich')
-)
+# Buttons für Geschlechtsauswahl
+geschlecht = None
+
+if st.button('Männlich'):
+    geschlecht = 'Männlich'
+elif st.button('Weiblich'):
+    geschlecht = 'Weiblich'
+
+# Falls noch kein Geschlecht ausgewählt wurde
+if not geschlecht:
+    st.warning("Bitte wählen Sie Ihr Geschlecht aus!")
 
 # Eingabefelder für Alter, Gewicht und Größe
 alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=25, step=1)
@@ -47,14 +44,12 @@ def berechne_tdee(bmr, aktivitaet):
         aktivitaetsfaktor = 1.9
     return bmr * aktivitaetsfaktor
 
-# Berechnung des BMR (Grundumsatz), falls Geschlecht und andere Eingaben vorhanden
-if st.button('Berechnen'):
+# Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
+if geschlecht:
     bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
+
+    # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
     tdee = berechne_tdee(bmr, aktivitaet)
 
     # Zeige den Gesamtumsatz (TDEE) an
     st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
-
-# Button für "Löschen" (Zurücksetzen der Eingaben)
-if st.button('Löschen'):
-    st.experimental_rerun()  # Um die Seite neu zu laden und alle Eingaben zurückzusetzen
