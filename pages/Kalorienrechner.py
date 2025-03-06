@@ -1,5 +1,32 @@
 import streamlit as st
 
+# CSS, um die Hintergrundfarbe und andere Stile zu ändern
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #4C8BF5;  /* Helles Blau */
+    }
+    .stButton>button {
+        background-color: #1e2a8a; /* Dunkleres Blau für den Button */
+        color: white;
+    }
+    .stTextInput>div>input {
+        background-color: #ffffff; /* Weißer Hintergrund für Eingabefelder */
+    }
+    .stRadio>div>label {
+        color: white;  /* Weiße Schriftfarbe für die Radio Buttons */
+    }
+    .stNumberInput>div>input {
+        background-color: #ffffff; /* Weißer Hintergrund für Zahleneingaben */
+    }
+    .stWarning {
+        color: #ffcc00; /* Gelbe Warnfarbe */
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
 # Titel der App
 st.title('Kalorienrechner')
 
