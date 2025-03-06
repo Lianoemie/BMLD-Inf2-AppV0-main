@@ -18,10 +18,10 @@ st.title('Kalorienrechner')
 # Geschlechtsauswahl mit Radio-Button
 geschlecht = st.radio("Wählen Sie Ihr Geschlecht:", ('Männlich', 'Weiblich'))
 
-# Eingabefelder für Alter, Gewicht und Größe mit Standardwert 0
-alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=0, step=1)
-gewicht = st.number_input('Gewicht (in kg)', min_value=0, max_value=200, value=0, step=1)
-groesse = st.number_input('Größe (in cm)', min_value=0, max_value=250, value=0, step=1)
+# Eingabefelder für Alter, Gewicht und Größe mit Standardwert None (Zwang zur Eingabe)
+alter = st.number_input('Alter (in Jahren)', min_value=1, max_value=120, value=None, step=1)
+gewicht = st.number_input('Gewicht (in kg)', min_value=5, max_value=200, value=None, step=1)
+groesse = st.number_input('Größe (in cm)', min_value=50, max_value=250, value=None, step=1)
 
 # Auswahl des Aktivitätsniveaus
 aktivitaet = st.radio(
@@ -49,8 +49,8 @@ def berechne_tdee(bmr, aktivitaet):
 
 # Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
 if st.button('Berechnen'):
-    # Überprüfen, ob alle Eingabefelder ausgefüllt wurden (nicht 0)
-    if alter > 0 and gewicht > 0 and groesse > 0:
+    # Überprüfen, ob alle Eingabefelder ausgefüllt wurden (nicht None oder 0)
+    if alter and gewicht and groesse:
         bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
 
         # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
