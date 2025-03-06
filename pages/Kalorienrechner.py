@@ -3,17 +3,8 @@ import streamlit as st
 # Titel der App
 st.title('Kalorienrechner')
 
-# Buttons für Geschlechtsauswahl
-geschlecht = None
-
-if st.button('Männlich'):
-    geschlecht = 'Männlich'
-elif st.button('Weiblich'):
-    geschlecht = 'Weiblich'
-
-# Falls noch kein Geschlecht ausgewählt wurde
-if not geschlecht:
-    st.warning("Bitte wählen Sie Ihr Geschlecht aus!")
+# Geschlechtsauswahl mit Radio-Button
+geschlecht = st.radio("Wählen Sie Ihr Geschlecht:", ('Männlich', 'Weiblich'))
 
 # Eingabefelder für Alter, Gewicht und Größe
 alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=25, step=1)
@@ -46,10 +37,16 @@ def berechne_tdee(bmr, aktivitaet):
 
 # Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
 if geschlecht:
-    bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
+    # Nur berechnen, wenn Alter, Gewicht und Größe eingegeben wurden
+    if alter > 0 and gewicht > 0 and groesse > 0:
+        # Button zum Berechnen
+        if st.button('Berechnen'):
+            bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
 
-    # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
-    tdee = berechne_tdee(bmr, aktivitaet)
+            # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
+            tdee = berechne_tdee(bmr, aktivitaet)
 
-    # Zeige den Gesamtumsatz (TDEE) an
-    st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
+            # Zeige den Gesamtumsatz (TDEE) an
+            st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
+    else:
+        st.warning("Bitte stellen Sie sicher, dass Sie alle Eingabefelder korrekt ausgefüllt haben.")
