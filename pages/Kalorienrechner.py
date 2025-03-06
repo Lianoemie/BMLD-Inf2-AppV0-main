@@ -4,9 +4,6 @@ import streamlit as st
 st.markdown(
     """
     <style>
-    body {
-        background-color: #4C8BF5;  /* Helles Blau */
-    }
     .stButton>button {
         background-color: #1e2a8a; /* Dunkleres Blau für den Button */
         color: white;
