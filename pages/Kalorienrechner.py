@@ -8,15 +8,6 @@ st.markdown(
         background-color: #1e2a8a; /* Dunkleres Blau für den Button */
         color: white;
     }
-    .stTextInput>div>input {
-        background-color: #ffffff; /* Weißer Hintergrund für Eingabefelder */
-    }
-    .stRadio>div>label {
-        color: white;  /* Weiße Schriftfarbe für die Radio Buttons */
-    }
-    .stNumberInput>div>input {
-        background-color: #ffffff; /* Weißer Hintergrund für Zahleneingaben */
-    }
     </style>
     """, unsafe_allow_html=True
 )
@@ -57,17 +48,15 @@ def berechne_tdee(bmr, aktivitaet):
     return bmr * aktivitaetsfaktor
 
 # Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
-if geschlecht:
+if st.button('Berechnen'):
     # Überprüfen, ob alle Eingabefelder ausgefüllt wurden (nicht 0)
-    if alter > 0 and gewicht > 0 and groesse > 0 and geschlecht:
-        # Button zum Berechnen
-        if st.button('Berechnen'):
-            bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
+    if alter > 0 and gewicht > 0 and groesse > 0:
+        bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
 
-            # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
-            tdee = berechne_tdee(bmr, aktivitaet)
+        # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
+        tdee = berechne_tdee(bmr, aktivitaet)
 
-            # Zeige den Gesamtumsatz (TDEE) an
-            st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
+        # Zeige den Gesamtumsatz (TDEE) an
+        st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
     else:
         st.warning("Bitte stellen Sie sicher, dass Sie alle Eingabefelder korrekt ausgefüllt haben.")
