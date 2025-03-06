@@ -1,6 +1,6 @@
 import streamlit as st
 
-# CSS, um die Hintergrundfarbe und andere Stile zu ändern
+# CSS, um andere Stile zu ändern
 st.markdown(
     """
     <style>
@@ -16,9 +16,6 @@ st.markdown(
     }
     .stNumberInput>div>input {
         background-color: #ffffff; /* Weißer Hintergrund für Zahleneingaben */
-    }
-    .stWarning {
-        color: #ffcc00; /* Gelbe Warnfarbe */
     }
     </style>
     """, unsafe_allow_html=True
@@ -61,8 +58,8 @@ def berechne_tdee(bmr, aktivitaet):
 
 # Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
 if geschlecht:
-    # Nur berechnen, wenn Alter, Gewicht und Größe eingegeben wurden
-    if alter > 0 and gewicht > 0 and groesse > 0:
+    # Überprüfen, ob alle Eingabefelder ausgefüllt wurden
+    if alter > 0 and gewicht > 0 and groesse > 0 and geschlecht:
         # Button zum Berechnen
         if st.button('Berechnen'):
             bmr = berechne_bmr(gewicht, groesse, alter, geschlecht=geschlecht)
@@ -73,4 +70,5 @@ if geschlecht:
             # Zeige den Gesamtumsatz (TDEE) an
             st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
     else:
-        st.warning("Bitte stellen Sie sicher, dass Sie alle Eingabefelder korrekt ausgefüllt haben.")
+        st.warning("Bitte stellen Sie sicher, dass alle Eingabefelder ausgefüllt und ein Geschlecht gewählt wurden.")
+
