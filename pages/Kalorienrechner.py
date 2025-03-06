@@ -27,10 +27,10 @@ st.title('Kalorienrechner')
 # Geschlechtsauswahl mit Radio-Button
 geschlecht = st.radio("Wählen Sie Ihr Geschlecht:", ('Männlich', 'Weiblich'))
 
-# Eingabefelder für Alter, Gewicht und Größe
-alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=25, step=1)
-gewicht = st.number_input('Gewicht (in kg)', min_value=30, max_value=200, value=70, step=1)
-groesse = st.number_input('Größe (in cm)', min_value=100, max_value=250, value=170, step=1)
+# Eingabefelder für Alter, Gewicht und Größe mit Standardwert 0
+alter = st.number_input('Alter (in Jahren)', min_value=0, max_value=120, value=0, step=1)
+gewicht = st.number_input('Gewicht (in kg)', min_value=0, max_value=200, value=0, step=1)
+groesse = st.number_input('Größe (in cm)', min_value=0, max_value=250, value=0, step=1)
 
 # Auswahl des Aktivitätsniveaus
 aktivitaet = st.radio(
@@ -58,7 +58,7 @@ def berechne_tdee(bmr, aktivitaet):
 
 # Berechnung des BMR (Grundumsatz), falls Geschlecht ausgewählt
 if geschlecht:
-    # Überprüfen, ob alle Eingabefelder ausgefüllt wurden
+    # Überprüfen, ob alle Eingabefelder ausgefüllt wurden (nicht 0)
     if alter > 0 and gewicht > 0 and groesse > 0 and geschlecht:
         # Button zum Berechnen
         if st.button('Berechnen'):
@@ -70,5 +70,4 @@ if geschlecht:
             # Zeige den Gesamtumsatz (TDEE) an
             st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
     else:
-        st.warning("Bitte stellen Sie sicher, dass alle Eingabefelder ausgefüllt und ein Geschlecht gewählt wurden.")
-
+        st.warning("Bitte stellen Sie sicher, dass Sie alle Eingabefelder korrekt ausgefüllt haben.")
