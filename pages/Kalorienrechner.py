@@ -1,7 +1,10 @@
 import streamlit as st
 
 from utils.login_manager import LoginManager
+from utils.data_manager import DataManager
+from utils.helpers import ch_now
 LoginManager().go_to_login('Start.py') 
+
 
 # CSS, um andere Stile zu ändern
 st.markdown(
@@ -58,6 +61,20 @@ if st.button('Berechnen'):
 
         # TDEE (Gesamtumsatz) basierend auf Aktivitätsniveau
         tdee = berechne_tdee(bmr, aktivitaet)
+
+        result_dict = {
+            'timestamp': ch_now(),
+            'Geschlecht': geschlecht,
+            'Alter': alter,
+            'Gewicht': gewicht,
+            'Größe': groesse,
+            'Aktivitätsniveau': aktivitaet,
+            'BMR': bmr,
+            'TDEE': tdee
+        }
+        DataManager().append_record(session_state_key='data_df', result_dict=result_dict)
+        st.dataframe(st.session_state['data_df'], width=500, height=200)
+
 
         # Zeige den Gesamtumsatz (TDEE) an
         st.write(f"Der geschätzte Kalorienverbrauch pro Tag beträgt: {tdee:.2f} kcal")
