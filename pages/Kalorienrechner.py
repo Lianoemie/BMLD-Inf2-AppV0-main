@@ -1,5 +1,8 @@
 import streamlit as st
 
+from utils.login_manager import LoginManager
+LoginManager().go_to_login('Start.py') 
+
 # CSS, um andere Stile zu ändern
 st.markdown(
     """
