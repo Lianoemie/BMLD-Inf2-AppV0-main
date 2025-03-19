@@ -72,7 +72,7 @@ if st.button('Berechnen'):
             'BMR': bmr,
             'TDEE': tdee
         }
-        DataManager().append_record(session_state_key='data_df', result_dict=result_dict)
+        DataManager().append_record(session_state_key='data_df', record_dict=result_dict)
         st.dataframe(st.session_state['data_df'], width=500, height=200)
 
 
