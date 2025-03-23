@@ -7,11 +7,11 @@ LoginManager().go_to_login('Start.py')
 # Here starts the actual app, which was developed previously
 import streamlit as st
 
-st.title('BMI Werte')
+st.title('Täglicher Kalorienverbrauch')
 
 data_df = st.session_state['data_df']
 if data_df.empty:
-    st.info('Keine BMI Daten vorhanden. Berechnen Sie Ihren BMI auf der Startseite.')
+    st.info('Keine Kalorienverbrauchs-Daten vorhanden. Berechnen Sie Ihren täglichen Kalorienverbrauch auf der Startseite.')
     st.stop()
 
 # Sort dataframe by timestamp

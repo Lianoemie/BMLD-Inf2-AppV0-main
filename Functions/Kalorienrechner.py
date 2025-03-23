@@ -8,7 +8,7 @@ def calculate_calories(Alter, Gewicht, Grösse, Aktivitätsniveau, timezone='Eur
         Alter (float): Alter in Jahren.
         Gewicht (float): Gewicht in Kilogramm.
         Grösse (float): Grösse in Zentimeter.
-        Aktivitätsniveau (str): Aktivitätsniveau.
+        Aktivitätsniveau (str): Aktivitaetsfaktor
 
     Returns:
         dict: A dictionary containing the inputs, calculated Kalorienverbrauch, category, and timestamp.
@@ -16,22 +16,20 @@ def calculate_calories(Alter, Gewicht, Grösse, Aktivitätsniveau, timezone='Eur
     if Grösse <= 0 or Gewicht <= 0 or Alter <= 0:
         raise ValueError("Grösse, Gewicht, and Alter must be greater than 0.")
     
-    # Calculate Basal Metabolic Rate (BMR) using the Mifflin-St Jeor Equation
+    # Berechnen der Basal Metabolic Rate (BMR) durch die Mifflin-St Jeor Formel
     BMR = 10 * Gewicht + 6.25 * Grösse - 5 * Alter + 5  # Assuming male, for female use -161 instead of +5
 
-    # Adjust BMR based on activity level
-    activity_levels = {
-        "sedentary": 1.2,
-        "lightly active": 1.375,
-        "moderately active": 1.55,
-        "very active": 1.725,
-        "extra active": 1.9
+    # Adjust BMR based on activity level (Aktivitätsniveau)
+    aktivitaetsfaktor = {
+        "Vorwiegend sitzend (Bürojob, Studium)": 1.2,
+        "Vorwiegend stehend (Verkauf, Handwerk)": 1.55,
+        "Vorwiegend laufend (Handwerker, Sportler)": 1.9
     }
 
-    if Aktivitätsniveau not in activity_levels:
-        raise ValueError("Invalid Aktivitätsniveau. Choose from: 'sedentary', 'lightly active', 'moderately active', 'very active', 'extra active'.")
+    if Aktivitätsniveau not in aktivitaetsfaktor:
+        raise ValueError("Invalid Aktivitätsniveau. Choose from: 'Vorwiegend sitzend (Bürojob, Studium)', 'Vorwiegend stehend (Verkauf, Handwerk)', 'Vorwiegend laufend (Handwerker, Sportler)'.")
 
-    Kalorienverbrauch = BMR * activity_levels[Aktivitätsniveau]
+    Kalorienverbrauch = BMR * aktivitaetsfaktor[Aktivitätsniveau]
 
     result_dict = {
         "timestamp": helpers.ch_now(),
