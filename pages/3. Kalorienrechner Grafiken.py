@@ -15,10 +15,10 @@ if data_df.empty:
     st.info('Keine Kalorienverbrauchs-Daten vorhanden. Berechnen Sie Ihren Kalorienverbrauch auf der Startseite.')
     st.stop()
 
-# Konvertiere die 'timestamp' Spalte in datetime, falls noch nicht geschehen
+# Konvertiere die 'timestamp' Spalte in datetime
 data_df['timestamp'] = pd.to_datetime(data_df['timestamp'])
 
-# Aggregiere auf tägliche Basis, indem wir den Index auf den Tag setzen
+# Aggregiere auf tägliche Basis, indem man den Index auf den Tag setzt
 data_df['date'] = data_df['timestamp'].dt.date
 daily_data = data_df.groupby('date').agg({
     'Gewicht': 'last',  # Nimm das letzte Gewicht des Tages
