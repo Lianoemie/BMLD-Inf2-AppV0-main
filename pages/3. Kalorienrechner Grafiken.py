@@ -22,7 +22,7 @@ data_df['timestamp'] = pd.to_datetime(data_df['timestamp'])
 data_df['date'] = data_df['timestamp'].dt.date
 daily_data = data_df.groupby('date').agg({
     'Gewicht': 'last',  # Nimm das letzte Gewicht des Tages
-    'Größe': 'last',    # Nimm die letzte Größe des Tages
+    'Grösse': 'last',    # Nimm die letzte Grösse des Tages
     'TDEE': 'last'      # Nimm den letzten Kalorienverbrauch des Tages
 }).reset_index()
 
@@ -30,9 +30,9 @@ daily_data = data_df.groupby('date').agg({
 st.line_chart(data=daily_data.set_index('date')['Gewicht'], use_container_width=True)
 st.caption('Gewicht über Zeit (in kg)')
 
-# Größe über die Zeit
-st.line_chart(data=daily_data.set_index('date')['Größe'], use_container_width=True)
-st.caption('Größe über Zeit (in cm)')
+# Grösse über die Zeit
+st.line_chart(data=daily_data.set_index('date')['Grösse'], use_container_width=True)
+st.caption('Grösse über Zeit (in cm)')
 
 # Kalorienverbrauch über die Zeit
 st.line_chart(data=daily_data.set_index('date')['TDEE'], use_container_width=True)
