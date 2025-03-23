@@ -21,6 +21,10 @@ st.markdown(
 # Titel der App
 st.title('Kalorienrechner')
 
+# Beschreibung
+st.write("""
+Mit dieser Applikation können Sie Ihren täglichen Kalorienverbrauch berechnen. Geben Sie dazu Ihr Geschlecht, Alter, Gewicht, Größe und Aktivitätsniveau an und drücken sie auf den Button ***'Berechnen'*** um das Ergebnis zu sehen.""")
+
 # Geschlechtsauswahl mit Radio-Button
 geschlecht = st.radio("Wählen Sie Ihr Geschlecht:", ('Männlich', 'Weiblich'))
 
