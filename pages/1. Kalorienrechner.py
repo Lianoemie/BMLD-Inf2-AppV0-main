@@ -23,7 +23,7 @@ st.title('Kalorienrechner')
 
 # Beschreibung
 st.write("""
-Mit dieser Applikation können Sie Ihren täglichen Kalorienverbrauch berechnen. Geben Sie dazu Ihr Geschlecht, Alter, Gewicht, Größe und Aktivitätsniveau an und drücken sie auf den Button ***'Berechnen'*** um das Ergebnis zu sehen.""")
+Mit dieser Applikation können Sie Ihren täglichen Kalorienverbrauch berechnen. Geben Sie dazu Ihr Geschlecht, Alter, Gewicht, Grösse und Aktivitätsniveau an und drücken sie auf den Button ***'Berechnen'*** um das Ergebnis zu sehen.""")
 
 # Geschlechtsauswahl mit Radio-Button
 geschlecht = st.radio("Wählen Sie Ihr Geschlecht:", ('Männlich', 'Weiblich'))
@@ -31,7 +31,7 @@ geschlecht = st.radio("Wählen Sie Ihr Geschlecht:", ('Männlich', 'Weiblich'))
 # Eingabefelder für Alter, Gewicht und Größe mit Standardwert None (Zwang zur Eingabe)
 alter = st.number_input('Alter (in Jahren)', min_value=1, max_value=120, value=None, step=1)
 gewicht = st.number_input('Gewicht (in kg)', min_value=9, max_value=200, value=None, step=1)
-groesse = st.number_input('Größe (in cm)', min_value=80, max_value=250, value=None, step=1)
+groesse = st.number_input('Grösse (in cm)', min_value=80, max_value=250, value=None, step=1)
 
 # Auswahl des Aktivitätsniveaus
 aktivitaet = st.radio(
@@ -71,7 +71,7 @@ if st.button('Berechnen'):
             'Geschlecht': geschlecht,
             'Alter': alter,
             'Gewicht': gewicht,
-            'Größe': groesse,
+            'Grösse': groesse,
             'Aktivitätsniveau': aktivitaet,
             'BMR': bmr,
             'TDEE': tdee

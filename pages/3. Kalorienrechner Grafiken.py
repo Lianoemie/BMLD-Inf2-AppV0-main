@@ -15,12 +15,12 @@ if data_df.empty:
     st.stop()
 
 # Gewicht über die Zeit
-st.line_chart(data=data_df.set_index('timestamp')['Gewicht'], 
+st.line_chart(data=data_df.set_index('timestamp')['Gewicht in (kg)'], 
                 use_container_width=True)
 st.caption('Gewicht über Zeit (in kg)')
 
 # Grösse über die Zeit 
-st.line_chart(data=data_df.set_index('timestamp')['Grösse'],
+st.line_chart(data=data_df.set_index('timestamp')['Grösse in (cm)'],
                 use_container_width=True)
 st.caption('Grösse über Zeit (in cm)')
 
